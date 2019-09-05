@@ -12,9 +12,6 @@ const methodOverride = require("method-override");
 const LocalStrategy = require("passport-local");
 const User = require("./models/User");
 const flash = require("connect-flash");
-const seedDB = require("./seeds");
-
-//seedDB();
 
 // routes
 const indexRoutes = require("./routes/index");
@@ -22,9 +19,9 @@ const popRoutes = require("./routes/pops");
 const commentRoutes = require("./routes/comments");
 const userProfileRoutes = require("./routes/userprofile");
 
+const db = require("./util/config.env");
 // db connection
-mongoose.connect("mongodb://phil:password1@ds163905.mlab.com:63905/twit_clone", {useNewUrlParser: true});
-//mongoose.connect("mongodb://localhost/twit_clone",{useNewUrlParser:true});
+mongoose.connect(db.mongoUrl, { useNewUrlParser: true });
 
 // flash config
 // flash has to come before passport config
@@ -46,9 +43,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use(methodOverride("_method"));
 // app config
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
@@ -59,11 +56,11 @@ app.use(expressSanitizer());
 // tells app where to look to find routes
 app.use(indexRoutes);
 app.use(popRoutes);
-app.use("/pops/:id/comments",commentRoutes);
+app.use("/pops/:id/comments", commentRoutes);
 app.use(userProfileRoutes);
 
 // port to listen on
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log("baby twit started on port " + PORT);
 });

@@ -1,13 +1,11 @@
-TODOs:
-- make new pops show up first * done *
-- font awesome icons instead of buttons * done *
-- add profile view so profile 
-- link users to other users
-- login or sign up index page * done *
-- add sanitizer so no script tags can be added to text area * done *
-- limit the amount of text that can be writtin in text area to 150 characters * done *
-- add footer * done *
-- add date and time to pop * done *
-- make textarea outline red if text length exceeds 150 characters * done *
-- show maxlength of characters remaining * done *
-- remove button borders on pops page * done *
+## Twit-Clone
+- A blog application where users can sign up and post blogs of 150 characters or less.
+- Application has functioning log in and register capabilities.
+- Users can comment on other users posts, edit their profiles, and only delete or update information they themselves posted.
+### Build stack
+- Node, Express, EJS, MongoDB
+### Issues
+- Photo uploading with multer
+- Excess spacing on page except in mobile screen sizes
+### Deployed link
+https://pacific-cove-29825.herokuapp.com/login

@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const expressSanitizer = require("express-sanitizer");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 // have to install method override to run other methods
 // besides get and post
 const methodOverride = require("method-override");
@@ -22,7 +22,7 @@ const userProfileRoutes = require("./routes/userprofile");
 
 const db = require("./util/config.env");
 // db connection
-mongoose.connect(db.mongoUrl, { useNewUrlParser: true });
+mongoose.connect(db.mongoUrl, { useNewUrlParser: true, useCreateIndex: true });
 
 // flash config
 // flash has to come before passport config

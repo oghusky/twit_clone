@@ -2,7 +2,7 @@
 
 <div class="container">
     <header>
-        <h1 class="text-center">TwitClone</h1>
+        <h1 class="text-center my-4"><%= currentUser.username %>'s TwitClone</h1>
         <p class="text-center">Scroll through the Pops</p>
         <p class="text-center">
             <a class="btn btn-danger" href="/pops/new">Add New</a>
@@ -11,36 +11,39 @@
     <div>
         <% pops.reverse().forEach((pop)=>{ %>
         <div class="mx-0 my-2">
-            <div class="card row">
-                <div class="container-fluid col-sm-2 px-0">
-                    <img class="img-fluid" src="<%= pop.author.avatar %>" alt="<%= pop.author.username %>" />
-                    <% console.log(pop)%>
+            <div class="card px-2 py-2">
+                <div class="row">
+                    <div class="container-fluid col-lg-4 px-2 mt-3 mr-0 mb-0 ml-4">
+                        <img class="img-fluid" style="height: 3rem; width: auto; border-radius: 50%;"
+                            src="<%= (pop.author.avatar === undefined ? 'https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg' : pop.author.avatar) %>"
+                            alt="<%= pop.author.username %>" />
+                        <% console.log(pop.author.avatar)%>
+                    </div>
+                    <div class="col-lg-8 px-0">
+                        <p class="mt-2 mb-1 ml-4"><strong><a
+                                    href="/profile/<%= pop.author.id %>">@<%= pop.author.username %></a></strong></p>
+                        <small>
+                            <p class="create-date ml-4 mb-2"><%= pop.created.toDateString() %></p>
+                        </small>
+                        <p class="ml-4 mb-2 post" value="<%=checkForHashes(pop.poptext)%>"></p>
+                    </div>
                 </div>
-                <div class="col-sm-10 px-0">
-                    <p class="mt-2 mb-1 ml-4"><strong><a
-                                href="/profile/<%= pop.author.id %>">@<%= pop.author.username %></a></strong></p>
-                    <small>
-                        <p class="create-date ml-4 mb-2"><%= pop.created.toDateString() %></p>
-                    </small>
-                    <p class="ml-4 mb-2 post" value="<%=checkForHashes(pop.poptext)%>"></p>
-                    <hr />
+                <div class="mt-0 mb-2">
+                    <p id="reply-btn" class="text-center mx-2">
+                        <a id="reply-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>"><i
+                                class="fas fa-reply"></i></a>
+                    </p>
+                    <% if(currentUser && pop.author.id.equals(currentUser._id)){ %>
+                    <p class="text-center mx-2" id="edit-btn">
+                        <a id="edit-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>/edit"><i
+                                class="far fa-edit"></i></a>
+                    </p>
+                    <form id="delete-btn-form" class="mx-2" action="/pops/<%= pop._id %>?_method=DELETE" method="POST">
+                        <button id="show-delete" class="btn btn-outline-danger btn-sm"><i
+                                class="far fa-trash-alt"></i></button>
+                    </form>
+                    <% } %>
                 </div>
-            </div>
-            <div class="mt-0 mb-2">
-                <p id="reply-btn" class="text-center mx-2">
-                    <a id="reply-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>"><i
-                            class="fas fa-reply"></i></a>
-                </p>
-                <% if(currentUser && pop.author.id.equals(currentUser._id)){ %>
-                <p class="text-center mx-2" id="edit-btn">
-                    <a id="edit-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>/edit"><i
-                            class="far fa-edit"></i></a>
-                </p>
-                <form id="delete-btn-form" class="mx-2" action="/pops/<%= pop._id %>?_method=DELETE" method="POST">
-                    <button id="show-delete" class="btn btn-outline-danger btn-sm"><i
-                            class="far fa-trash-alt"></i></button>
-                </form>
-                <% } %>
             </div>
         </div>
         <%});%>

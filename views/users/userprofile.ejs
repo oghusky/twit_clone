@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="container-fluid"
-        style="background-image: url('<%= user.avatar %>'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px; width: 100%; margin-bottom: 2rem;">
+        style="background-image: url('<%= user.avatar %>'); box-shadow: 2px 2px 5px 1px rgba(0,0,0,.3); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px; width: 100%; margin-bottom: 2rem;">
     </div>
     <div style="margin-top: -5rem; margin-bottom: 2rem; border-radius: 50%;">
         <img style="border-radius: 50%; display:block; margin-left: 0; box-shadow: 2px 2px 5px 1px rgba(0,0,0,.3); height: 10rem; width: auto;"
@@ -22,7 +22,6 @@
                     <p><strong><%= pop.author.username %></strong></p>
                     <p class="mt-0"><small class="py-0"><%= pop.created.toDateString() %></small></p>
                     <p><%= pop.poptext %></p>
-                    <hr>
                     <div style="display: flex">
                         <p id="reply-btn">
                             <a id="reply-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>"><i

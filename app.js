@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const expressSanitizer = require("express-sanitizer");
+const cors = require("cors");
 const multer = require("multer");
 // have to install method override to run other methods
 // besides get and post
@@ -52,12 +53,33 @@ app.use((req, res, next) => {
     next();
 });
 app.use(expressSanitizer());
+app.use(cors());
 
 // tells app where to look to find routes
 app.use(indexRoutes);
 app.use(popRoutes);
 app.use("/pops/:id/comments", commentRoutes);
 app.use(userProfileRoutes);
+
+// function to render hashtagged words in string
+app.locals.checkForHashes = (str) => {
+    let hasHash, replaceStr, spliceHashedWord;
+    if (str.split("").indexOf("#") > -1) {
+        let splitAtHash = str.split(" ");
+        hasHash = splitAtHash.map(hash => {
+            if (hash.charAt(0) === "#") return hash
+        });
+        hasHash.forEach(word => {
+            if (word !== undefined) {
+                splitAtHash.splice(splitAtHash.indexOf(word), 1, `<span class="boldHash" style="font-weight:bolder;" href="#">${word}</span>`)
+                replaceStr = splitAtHash.join(" ");
+                return replaceStr;
+            }
+        })
+        return replaceStr;
+    }
+    return str;
+}
 
 // port to listen on
 const PORT = process.env.PORT || 3000;

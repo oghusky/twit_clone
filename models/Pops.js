@@ -7,12 +7,13 @@ let popsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    author:{
+    author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        username: String
+        username: String,
+        avatar: String
     },
     comments: [
         {

@@ -1,40 +1,48 @@
 <% include ../partials/header %>
 
 <div class="container">
-    <div class="container-fluid" style="background-image: url('<%= user.avatar %>'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px; width: 200px">
-        <!-- <img class="img-fluid" src="<%= user.avatar %>" alt="<%= user.username %>'s Photo"> -->
+    <div class="container-fluid"
+        style="background-image: url('<%= user.avatar %>'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px; width: 100%; margin-bottom: 2rem;">
+    </div>
+    <div style="margin-top: -5rem; margin-bottom: 2rem; border-radius: 50%;">
+        <img style="border-radius: 50%; display:block; margin-left: 0; box-shadow: 2px 2px 5px 1px rgba(0,0,0,.3); height: 10rem; width: auto;"
+            class="img-fluid" src="<%= user.avatar %>" alt="<%= user.username %>'s Photo">
     </div>
     <h6>@<%= user.username %><h6>
-    <p><%= user.realname %></p>
-    <p><%= user.bio %></p>
-    <% if(currentUser.id == user.id){ %>
-        <p>
-            <a class="btn btn-outline-danger btn-sm" href="/profile/<%= currentUser.id %>/edit">Edit Profile</a>
-        </p>
-    <% } %>
-    <div>
-        <% pops.reverse().forEach(pop=>{ %>
-            <div class="card py-2 px-2">
-                <p><strong><%= pop.author.username %></strong></p>
-                <p class="mt-0"><small class="py-0"><%= pop.created.toDateString() %></small></p>
-                <p><%= pop.poptext %></p>
-                <hr>
-                <div style="display: flex;">
-                    <p id="reply-btn">
-                        <a id="reply-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>"><i class="fas fa-reply"></i></a>
-                    </p>
-                    <% if(currentUser && pop.author.id.equals(currentUser._id)){ %>
-                        <p class="mx-2" id="edit-btn" style="display: inline;">
-                            <a id="edit-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>/edit"><i class="far fa-edit"></i></a>
+            <p><%= user.realname %></p>
+            <p><%= user.bio %></p>
+            <% if(currentUser.id == user.id){ %>
+            <p>
+                <a class="btn btn-outline-danger btn-sm" href="/profile/<%= currentUser.id %>/edit">Edit Profile</a>
+            </p>
+            <% } %>
+            <div>
+                <% pops.reverse().forEach(pop=>{ %>
+                <div class="card py-2 px-2">
+                    <p><strong><%= pop.author.username %></strong></p>
+                    <p class="mt-0"><small class="py-0"><%= pop.created.toDateString() %></small></p>
+                    <p><%= pop.poptext %></p>
+                    <hr>
+                    <div style="display: flex">
+                        <p id="reply-btn">
+                            <a id="reply-btn-link" class="btn btn-outline-danger btn-sm" href="/pops/<%= pop._id %>"><i
+                                    class="fas fa-reply"></i></a>
                         </p>
-                        <form id="delete-btn-form" style="display: inline;" class="mx-2" action="/pops/<%= pop._id %>?_method=DELETE" method="POST">
-                            <button id="show-delete" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                        <% if(currentUser && pop.author.id.equals(currentUser._id)){ %>
+                        <p class="mx-2" id="edit-btn" style="display: inline;">
+                            <a id="edit-btn-link" class="btn btn-outline-danger btn-sm"
+                                href="/pops/<%= pop._id %>/edit"><i class="far fa-edit"></i></a>
+                        </p>
+                        <form id="delete-btn-form" style="display: inline;" class="mx-2"
+                            action="/pops/<%= pop._id %>?_method=DELETE" method="POST">
+                            <button id="show-delete" class="btn btn-outline-danger btn-sm"><i
+                                    class="far fa-trash-alt"></i></button>
                         </form>
-                    <% } %>
+                        <% } %>
+                    </div>
                 </div>
+                <% }) %>
             </div>
-        <% }) %>
-    </div>
 </div>
 
 <% include ../partials/footer %>

@@ -16,7 +16,8 @@ exports.postPops = (req, res) => {
     let poptext = req.sanitize(req.body.poptext);
     let author = {
         id: req.user._id,
-        username: req.user.username
+        username: req.user.username,
+        avatar: req.user.avatar
     }
     let newPop = { name: name, poptext: poptext, author: author }
     // create new pop and save
